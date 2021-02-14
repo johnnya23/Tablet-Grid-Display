@@ -1,18 +1,12 @@
 <?php
 /*
 Plugin Name: JMA Tablet Grid Display
-Description: Updated for Genesis REQUIRES tgd
+Description: Updated for Genesis REQUIRES ??
 Version: 1.0
 Author: John Antonacci
 Author URI: http://cleansupersites.com
 License: GPL2
 */
-
-function jma_tgd_plugin_activate()
-{
-    /* activation code here */
-}
-register_activation_hook(__FILE__, 'jma_tgd_plugin_activate');
 
 function jma_tgd_admin_notice()
 {
@@ -79,21 +73,39 @@ function jma_tgd_grid_display(){
     if(isset($tablets_array[0]['tablet'])){
     $tablets = $tablets_array[0]['tablet'];
     foreach($tablets as $i => $tablet){
+        //echo '<pre>';print_r($tablet);echo '</pre>';
+        $link_open = $link_close = $click_for_more = '';
+        if(isset($tablet['link']) && is_array($tablet['link'])){
+            $target = isset($tablet['link']['target']) && $tablet['link']['target']?$tablet['link']['target']:'_self';
+            $link_open = '<a href="' . esc_url($tablet['link']['url']) . '" target ="' . $target . '" title="' . $tablet['link']['title'] . '">';
+            $link_close = '</a>';
+            $click_for_more = '<span class="tgd-click">click to see more</span>';
+        }
         $img_size = !$i? 'add_image_size-lg':'add_image_size';
+
+
         $inner .= '<div class="tgd-item">';
-          $inner .= '<div class="tgd-bg">';
-          if(isset($tablet['image']) && $tablet['image'])
-          $inner .= wp_get_attachment_image($tablet['image'], $img_size);
-            $inner .= '<div class="tgd-overlay">';
-            if(isset($tablet['title']) && $tablet['title'])
-            $inner .= '<h3>' . $tablet['title'] . '</h3>';
+        $inner .= '<div class="tgd-bg">';
+
+        if(isset($tablet['image']) && $tablet['image'])
+            $inner .= wp_get_attachment_image($tablet['image'], $img_size);
+
+        if(isset($tablet['title']) && $tablet['title'])
+            $inner .= '<h3>' . esc_html($tablet['title']) . '</h3>';
+
+        $inner .= $link_open;
+        $inner .= '<span style="display:block" class="tgd-overlay">';
+        $inner .= $click_for_more;
             if(isset($tablet['excerpt']) && $tablet['excerpt'])
-            $inner .= '<div>' . $tablet['excerpt'] . '</div>';
-          $inner .= '</div>';
-        $inner .= '</div>';
-        $inner .= '</div>';
+            $inner .= '<span style="display:block">' . esc_html($tablet['excerpt']) . '</span>';
+        $inner .= '</span>';/*tgd-overlay*/
+        $inner .= $link_close;
+
+        $inner .= '</div>';/*tgd-item*/
+        $inner .= '</div>';/*tgd-bg*/
     }
-    $open .= '<div class="tgd-filler" style="background-image: url(\'' . $tablets_array[0]['background_image'] . '\');background-repeat: no-repeat; background-size: cover">';
+    $bg = isset($tablets_array[0]['background_image']) && $tablets_array[0]['background_image']? ' style="background-image: url(\'' . esc_url($tablets_array[0]['background_image']) . '\');background-repeat: no-repeat; background-size: cover"': '';
+    $open .= '<div class="tgd-filler"' . $bg . '>';
     $open .= '<div class="tgd-wrapper">';
     $open .= '<div class="tgd-outer">';
     $open .= '<div class="tgd-inner">';
