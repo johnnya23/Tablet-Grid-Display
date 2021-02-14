@@ -75,6 +75,7 @@ function jma_tgd_grid_display(){
     if(isset($tablets_array[0]['tablet'])){
     $tablets = $tablets_array[0]['tablet'];
     foreach($tablets as $i => $tablet){
+        if($i > 4)break;
         //echo '<pre>';print_r($tablet);echo '</pre>';
         $link_open = $link_close = $click_for_more = '';
         if(isset($tablet['link']) && is_array($tablet['link'])){
@@ -106,7 +107,12 @@ function jma_tgd_grid_display(){
         $inner .= '</div>';/*tgd-item*/
         $inner .= '</div>';/*tgd-bg*/
     }
-    $bg = isset($tablets_array[0]['background_image']) && $tablets_array[0]['background_image']? ' style="background-image: url(\'' . esc_url($tablets_array[0]['background_image']) . '\');background-repeat: no-repeat; background-size: cover"': '';
+    $bg = '';
+    if(isset($tablets_array[0]['background_image']) && $tablets_array[0]['background_image']){
+        $bg =' style="background-image: url(\'' . esc_url($tablets_array[0]['background_image']) . '\');background-repeat: no-repeat; background-size: cover"';
+    }elseif(get_the_post_thumbnail_url($id,'full')){
+        $bg =' style="background-image: url(\'' . get_the_post_thumbnail_url($id,'full') . '\');background-repeat: no-repeat; background-size: cover"';
+    }
     $open .= '<div class="tgd-filler"' . $bg . '>';
     $open .= '<div class="tgd-wrapper">';
     $open .= '<div class="tgd-outer">';
