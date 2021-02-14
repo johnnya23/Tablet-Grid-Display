@@ -1,0 +1,146 @@
+.tgd-filler {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tgd-wrapper {
+    width: 90%;
+    height: 90%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tgd-outer {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    /*padding-bottom: 25%;*/
+    width: 100%;
+    /*border: solid 2px black;*/
+}
+
+.tgd-inner {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 30px;
+}
+
+@media(max-width: 1200px) {
+    .tgd-inner {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+.tgd-bg img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.tgd-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 73, 0, 0.9);
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: .2s ease;
+}
+
+.tgd-bg:hover .tgd-overlay {
+    height: 100%;
+}
+
+.tgd-item:first-child {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    font-size: 14px;
+}
+
+.tgd-bg {
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+}
+
+.tgd-overlay>* {
+    position: absolute;
+}
+
+.tgd-overlay h3 {
+    color: #ffffff;
+    top: 2em;
+    left: 2em;
+    font-size: 1.6em;
+}
+
+.tgd-overlay {
+    font-size: 15px;
+}
+
+.tgd-overlay div {
+    bottom: 2em;
+    right: 2em;
+    width: 60%
+}
+
+.tgd-item:first-child .tgd-overlay {
+    font-size: 24px;
+}
+
+@media(min-width: 768px) {
+    .tgd-filler {
+        background-image: none !important
+    }
+}
+
+@media(max-width: 767px) {
+    .tgd-inner {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        /*gap: 20px;*/
+    }
+
+    .tgd-filler, .tgd-inner {
+        position: relative;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .tgd-wrapper {
+        padding-bottom: 115%;
+        height: 0
+    }
+
+    .tgd-item {
+        /*padding-bottom: 100%;*/
+    }
+}
+
+@media(max-height: 700px) {
+    .position-content, .inner-visual, .inner-visual>img, .jma-min-height .wp-block-getwid-section__wrapper {
+        min-height: 500px !important
+    }
+}
