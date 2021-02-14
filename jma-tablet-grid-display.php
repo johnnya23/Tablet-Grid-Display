@@ -42,13 +42,15 @@ function jma_tgd_detect_shortcode($post = false)
     return $return;
 }
 
+
+
 function jma_tgd_enqueue()
 {
     $min = WP_DEBUG? '': '.min';
     // wp_enqueue_style( $handle, $src, $deps, $ver, $media );
     wp_enqueue_style('jma_tgd_css', trailingslashit(plugin_dir_url(__FILE__)) . 'tgd-style' . $min . '.css', array());
 
-    $output = get_transient('jma_tgd_general_css');
+    /*$output = get_transient('jma_tgd_general_css');
     if (false == $output) {
         // It wasn't there, so regenerate the data and save the transient
         //$mods = jma_tgd_get_theme_mods('jma_tgd_');
@@ -56,7 +58,7 @@ function jma_tgd_enqueue()
 
         //$output = jma_tgd_process_css_array($css);
     set_transient('jma_tgd_general_css', $output);
-    }
+}*/
     //wp_add_inline_style('JMA_tgd_combined_css', $output);
 }
 add_action('wp_enqueue_scripts', 'jma_tgd_enqueue');
