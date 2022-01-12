@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: JMA Tablet Grid Display
-Description: Updated for Genesis REQUIRES ??
+Description: Updated for Genesis REQUIRES
 Version: 1.0
 Author: John Antonacci
 Author URI: http://cleansupersites.com
@@ -24,6 +24,7 @@ function jma_tgd_check_for_plugin()
 add_action('admin_init', 'jma_tgd_check_for_plugin');
 
 add_image_size('jma-tgd-grid-lg', 1000, 800, true);
+
 add_image_size('jma-tgd-grid', 500, 400, true);
 
 function jma_tgd_detect_shortcode($post = false)
@@ -65,6 +66,7 @@ add_action('wp_enqueue_scripts', 'jma_tgd_enqueue');
 
 
 function jma_tgd_grid_display(){
+
     global $wp_query;
     $id = $wp_query->get_query_object_id();
     if(!get_field('tablet_groups', $id))return;
@@ -94,10 +96,10 @@ function jma_tgd_grid_display(){
             $inner .= wp_get_attachment_image($tablet['image'], $img_size);
 
         if(isset($tablet['title']) && $tablet['title'])
-            $inner .= '<h3>' . esc_html($tablet['title']) . '</h3>';
+            $inner .= '<h3>' . wp_kses_decode_entities($tablet['title']) . '</h3>';
 
         $inner .= $link_open;
-        $inner .= '<span style="display:block" class="tgd-overlay">';
+        $inner .= '<span class="tgd-overlay">';
         $inner .= $click_for_more;
             if(isset($tablet['excerpt']) && $tablet['excerpt'])
             $inner .= '<span style="display:block">' . esc_html($tablet['excerpt']) . '</span>';
@@ -116,6 +118,8 @@ function jma_tgd_grid_display(){
     $open .= '<div class="tgd-filler"' . $bg . '>';
     $open .= '<div class="tgd-wrapper">';
     $open .= '<div class="tgd-outer">';
+    if(isset($tablets_array[0]['tablets_title']) && $tablets_array[0]['tablets_title'])
+    $open .= '<h3 style="text-align:center">' . wp_kses_decode_entities($tablets_array[0]['tablets_title']) . '</h3>';
     $open .= '<div class="tgd-inner">';
 
 
